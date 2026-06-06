@@ -1,4 +1,4 @@
-name: Claude Code
+name: Claude Code (fodevaux fork)
 description: Run Claude Code AI assistant inside Home Assistant to create automations, debug issues, and manage your smart home configuration
 version: "1.2.63-avx"
 slug: claudecode
