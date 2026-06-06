@@ -55,7 +55,8 @@ RUN case "${BUILD_ARCH}" in \
     chmod +x /usr/bin/ttyd
 
 # Install Claude Code via npm
-RUN npm install -g @anthropic-ai/claude-code
+RUN npm install -g @anthropic-ai/claude-code@2.0.76
+RUN printf '#!/bin/sh\nexec node /usr/local/lib/node_modules/@anthropic-ai/claude-code/cli.js "$@"\n' > /usr/local/bin/claude && chmod +x /usr/local/bin/claude
 
 # Install hass-mcp for Home Assistant integration and pymodbus for Modbus operations
 RUN pip3 install --no-cache-dir --break-system-packages hass-mcp pymodbus pyserial
@@ -232,7 +233,7 @@ CMD ["/bin/bash", "-c", "\
   AUTO_UPDATE=$(jq -r '.auto_update_claude // true' /data/options.json) && \
   if [ \"$AUTO_UPDATE\" = \"true\" ]; then \
     echo '[INFO] Checking for Claude Code updates...' && \
-    npm update -g @anthropic-ai/claude-code 2>/dev/null || echo '[WARN] Update check failed, continuing...'; \
+    true || echo '[WARN] Update check failed, continuing...'; \
   fi && \
   claude mcp remove homeassistant -s user 2>/dev/null || true && \
   claude mcp remove playwright -s user 2>/dev/null || true && \
