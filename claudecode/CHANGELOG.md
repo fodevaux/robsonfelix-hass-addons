@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.64] - 2026-07-21
+
+### Added
+- `all_addon_configs:rw` mapping so Claude Code can access other addons' config folders under `/addon_configs/` (e.g. `/addon_configs/a0d7b954_appdaemon`)
+
 ## [1.2.63] - 2026-02-23
 
 ### Fixed
