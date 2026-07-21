@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.65] - 2026-07-21
+
+### Changed
+- Reverted `all_addon_configs:rw` mapping added in 1.2.64
+
 ## [1.2.64] - 2026-07-21
 
 ### Added
