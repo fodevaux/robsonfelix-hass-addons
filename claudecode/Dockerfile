@@ -12,7 +12,8 @@ LABEL org.opencontainers.image.licenses="MIT"
 ENV \
     LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    TERM=xterm-256color
+    TERM=xterm-256color \
+    DISABLE_AUTOUPDATER=1
 
 # Install system dependencies (ttyd installed separately as static binary)
 RUN apk add --no-cache \
@@ -246,6 +247,10 @@ CMD ["/bin/bash", "-c", "\
   else \
     echo '[INFO] MCP disabled'; \
   fi && \
+  SETTINGS_FILE=/root/.claude/settings.json && \
+  { [ -s $SETTINGS_FILE ] || echo '{}' > $SETTINGS_FILE; } && \
+  jq '.permissions.defaultMode //= \"auto\"' $SETTINGS_FILE > /tmp/settings.tmp && mv /tmp/settings.tmp $SETTINGS_FILE && \
+  echo '[INFO] Default permission mode ensured (auto unless set otherwise)' && \
   if [ \"$ENABLE_PLAYWRIGHT\" = \"true\" ]; then \
     claude mcp add-json playwright \"{\\\"command\\\":\\\"npx\\\",\\\"args\\\":[\\\"--no-install\\\",\\\"@playwright/mcp\\\",\\\"--cdp-endpoint\\\",\\\"http://${PLAYWRIGHT_HOST}:9222\\\"]}\" -s user && \
     echo \"[INFO] Playwright MCP enabled (CDP: http://${PLAYWRIGHT_HOST}:9222)\"; \

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.67] - 2026-11-26
+
+### Changed
+- Rebuild picks up the latest Claude Code (2.1.x); in-container `claude update` cannot write to `/usr/local`
+- Set `DISABLE_AUTOUPDATER=1` to silence the "Auto-update failed: no write permission to npm prefix" error
+
+### Added
+- Startup ensures `permissions.defaultMode` is `auto` in `/root/.claude/settings.json` (keeps any value already set)
+
 ## [1.2.65] - 2026-07-21
 
 ### Changed
